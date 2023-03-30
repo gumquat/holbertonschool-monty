@@ -46,6 +46,12 @@ typedef struct instruction_s
 } instruction_t;
 
 /* FUNCTION PROTOTYPES */
+void (*get_func(stack_t **stack, int l, char *code))(stack_t **, unsigned int);
+void err(void);
+void pushOp(stack_t **stack, unsigned int line_number, char *pushNum);
+void free_stack(stack_t **stack);
+
+/* opcodes */
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
