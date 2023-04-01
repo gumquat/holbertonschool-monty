@@ -1,11 +1,10 @@
 #include "monty.h"
-
 /**
- * pall - prints all elements of a stack
- * @stack: linked list stack to pall
- * @line_number: current line number of bytecode file
- */
-void pall((stack_t **stack, unsigned int line_number)
+ *  * pall - prints all elements of a stack
+ *   * @stack: linked list stack to pall
+ *    * @line_number: current line number of bytecode file
+ *     */
+void pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *temp;
 
@@ -19,10 +18,10 @@ void pall((stack_t **stack, unsigned int line_number)
 }
 
 /**
- * swap - swaps the two top elements of a stack
- * @stack: linked list stack to swap
- * @line_number: current line number of bytecode file
- */
+ *  * swap - swaps the two top elements of a stack
+ *   * @stack: linked list stack to swap
+ *    * @line_number: current line number of bytecode file
+ *     */
 void swap(stack_t **stack, unsigned int line_number)
 {
 	int temp = (*stack)->n;
@@ -39,10 +38,10 @@ void swap(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * add - adds the first two elements of a stack, replaces both with sum
- * @stack: linked list stack to add
- * @line_number: current line number of bytecode file
- */
+ *  * add - adds the first two elements of a stack, replaces both with sum
+ *   * @stack: linked list stack to add
+ *    * @line_number: current line number of bytecode file
+ *     */
 void add(stack_t **stack, unsigned int line_number)
 {
 	stack_t *temp = *stack;
@@ -61,10 +60,10 @@ void add(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * nop - does nothing
- * @stack: linked list stack to do nothing to
- * @line_numebr: current line number of bytecode file
- */
+ *  * nop - does nothing
+ *   * @stack: linked list stack to do nothing to
+ *    * @line_number: current line number of bytecode file
+ *     */
 void nop(stack_t **stack, unsigned int line_number)
 {
 	(void)stack;

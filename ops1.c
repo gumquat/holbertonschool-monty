@@ -1,113 +1,72 @@
 #include "monty.h"
 
 /**
- * push - pushes an element to the stack
- * @stack: double pointer to the first node
- * @line_number: value of the node
- * Return: nothing
- */
+ *  * push - adds an element to a stack
+ *   * @stack: linked list stack to push to
+ *    * @line_number: current line number of bytecode file
+ *     */
 void push(stack_t **stack, unsigned int line_number)
 {
-	stack_t *element = malloc(sizeof(stack_t));
-	char *op;
-	int num;
+	stack_t *newNode;
 
-	if (element == NULL)
+	newNode = malloc(sizeof(stack_t));
+
+	if (!newNode)
 	{
-		printf("Error: malloc failed\n")
-		exit(EXIT_FAILURE);
+		fprintf(stderr, "Error: malloc failed\n");
+		free_stack(stack);
+		err();
 	}
-	op = strtok(NULL, DELIMS);
-	if (op == NULL || stack == NULL)
-	{
-		printf("L%u: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
-	}
-	num = _strtol(op, line_number);
-	element->n = num;
-	element->prev = NULL;
-	element->next = *stack;
-	if (element->next != NULL)
-		(element->next)->prev = element;
-	*stack = element;
+
+	(void)line_number;
+
+	if (*stack)
+		(*stack)->prev = newNode;
+
+	newNode->prev = NULL;
+	newNode->next = *stack;
+	newNode->n = 0;
+	*stack = newNode;
 }
 
 /**
- * pall - prints all values on the stack, starting from top
- * @stack: double pointer to the first node
- * @line_number: value of new node
- * Return: nothing
- */
-void pall(stack_t **stack, unsigned int line_number)
-{
-	stack_t *element = *stack;
-
-	UNUSED(line_number);
-	while (element != NULL)
-	{
-		printf("%d\n", element->n);
-		element = element->next;
-	}
-}
-
-/**
- * pint - prints value at the top of the stack
- * @stack: double pointer to the first node
- * @line_number: value of new node
- * Return: nothing
- */
-void pint(stack_t **stack, unsigned int line_number)
-{
-	if (stack == NULL || *stack == NULL)
-	{
-		printf("L%u: can't pint, stack empty\n", line_number);
-		exit(EXIT_FAILURE);
-	}
-	printf("%d\n", (*satck)->n);
-}
-
-/**
- * pop - removes top element of stack
- * @stack: double pointer to the first node
- * @line_number: value of new node
- * Return: nothing
- */
+ *  * pop - removes the first element of the stack
+ *   * @stack: linked list stack to pop
+ *    * @line_number: current line number of bytecode file
+ *     */
 void pop(stack_t **stack, unsigned int line_number)
 {
-	stack_t *node;
+	stack_t *temp;
 
-	if (stack == NULL || *stack == NULL)
+	temp = *stack;
+	if (!(*stack))
 	{
-		printf("L%u: can't pop an empty stack\n", line_number);
+		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
+		fclose(file);
+		free_stack(stack);
 		exit(EXIT_FAILURE);
 	}
-	node  = *stack;
-	(*stack) = (*stack)->next;
-	free(node);
+
+	*stack = temp->next;
+	if (*stack)
+		(*stack)->prev = NULL;
+	free(temp);
 }
 
 /**
- * swap - swaps 2 elements of the stack
- * @stack: double pointer to the first node
- * @line_number: value of new node
- */
-void swap(stack_t **stack, unsigned int line_number)
+ *  * pint - prints the value in the first node of a stack
+ *   * @stack: linked list stack to pint
+ *    * @line_number: current line number of bytecode file
+ *     */
+void pint(stack_t **stack, unsigned int line_number)
 {
-	stack_t *tmp;
-
-	UNUSED(line_number);
-	if (!(*stack) || !((*stack)->next))
+	if (!(*stack))
 	{
-		printf("L%u: can't swap, stack too short\n", line_number);
+		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
+		fclose(file);
+		free_stack(stack);
 		exit(EXIT_FAILURE);
 	}
-	tmp = (*stack)->next;
-	(*stack)->prev = (*stack)->next;
-	(*stack)->next = tmp->next;
-	tmp->prev = NULL;
-	(*stack)->prev = tmp;
-	if (tmp->next)
-		tmp->next->prev = *stack;
-	tmp->next = *stack;
-	(*stack) = (*stack)->prev;
+
+	printf("%d\n", (*stack)->n);
 }
